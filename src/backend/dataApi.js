@@ -5,7 +5,6 @@ const http = axios.create({
 
 async function getPalette(color) {
     try{
-        console.log(color)
         const res = await http.get('/scheme', {
             params: {
                 hex: color,

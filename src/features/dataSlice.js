@@ -21,7 +21,7 @@ export const dataSlice = createSlice({
                 } else {
                     params = Math.floor(Math.random()*16777215).toString(16)
                 }
-
+                
                 state.colors = await dataApi.getPalette(params)
             } catch(err) {
                 throw new Error(err)
