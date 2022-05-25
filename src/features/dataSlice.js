@@ -11,7 +11,7 @@ export const dataSlice = createSlice({
     name: 'data',
     initialState,
     reducers: {
-        async getColors(state) {
+        async getColorsPalette(state) {
             try {
                 state.loading = true
                 let params = ''
@@ -29,15 +29,15 @@ export const dataSlice = createSlice({
                 state.loading = false
             }
         },
-        getColor(state, action) {
+        setSelected(state, action) {
             state.selected = action.payload
         },
-        getRandomColor(state) {
+        clearSelected(state) {
             state.selected = ""
         }
     }
 })
 
-export const {} = dataSlice.actions
+export const { getColorsPalette, setSelected, clearSelected } = dataSlice.actions
 
 export default dataSlice.reducer
