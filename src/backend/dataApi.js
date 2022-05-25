@@ -1,19 +1,22 @@
 const axios = require('axios').default
 const http = axios.create({
-    baseURL: 'https://random-palette-generator.p.rapidapi.com/',
-    headers: {
-        'X-RapidAPI-Host': 'random-palette-generator.p.rapidapi.com',
-		'X-RapidAPI-Key': process.env.REACT_APP_NEXT_PUBLIC_RAPIDAPI_KEY
-    }
+    baseURL: 'https://www.thecolorapi.com/',
 })
 
-async function getPalette() {
+async function getPalette(color) {
     try{
-        const res = http.get('palette/Monochromatic/1/4');
-        return res
+        console.log(color)
+        const res = await http.get('/scheme', {
+            params: {
+                hex: color,
+                mode: 'analogic',
+                count: 5
+            }
+        })
+        return res.data.colors.map(color => color.hex.value)
     } catch(err) {
         throw new Error(err.text)
     }
-}
+} 
 
 export { getPalette }
