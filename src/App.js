@@ -5,16 +5,15 @@ import * as dataApi from './backend/dataApi'
 function App() {
   const [colors, setColors] = useState([])
   const [loading, setLoading] = useState(false)
-  const [selected, setSelected] = useState('')
+  const [selected, setSelected] = useState(null)
 
   const getColors = async () => {
     try { 
       setLoading(true);
       let params = null
 
-      if(selected.length > 0) {
+      if(selected & selected.length > 0) {
         params = selected.slice(1)
-
       } else {
         params = Math.floor(Math.random()*16777215).toString(16)
       }
@@ -30,6 +29,11 @@ function App() {
 
   const getColor = (event) => {
     setSelected(event.target.innerHTML)
+    getColors()
+  }
+
+  const getRandomColor = () => {
+    setSelected('')
     getColors()
   }
 
@@ -64,7 +68,7 @@ function App() {
 				</div>
 			)}
 
-      <button className="mt-10 font-bold text-primary text-xl hover:text-active" onClick={getColors}>
+      <button className="mt-10 font-bold text-primary text-xl hover:text-active" onClick={getRandomColor}>
         {
           loading ? (<span className="animate-pulse">Loading...</span>) : (<>Change &rarr;</>)
         }
