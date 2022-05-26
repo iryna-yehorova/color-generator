@@ -3,7 +3,6 @@ import * as dataApi from '../backend/dataApi'
 
 const initialState = {
     colors: [],
-    selected: null,
     loading: false
 }
 
@@ -11,33 +10,27 @@ export const dataSlice = createSlice({
     name: 'data',
     initialState,
     reducers: {
-        async getColorsPalette(state) {
-            try {
-                state.loading = true
-                let params = ''
-
-                if(state.selected && state.selected.length > 0) {
-                    params = state.selected.slice(1)
-                } else {
-                    params = Math.floor(Math.random()*16777215).toString(16)
-                }
-                
-                state.colors = await dataApi.getPalette(params)
-            } catch(err) {
-                throw new Error(err)
-            } finally {
-                state.loading = false
-            }
+        setColors(state, action) {
+            state.colors = action.payload
         },
-        setSelected(state, action) {
-            state.selected = action.payload
-        },
-        clearSelected(state) {
-            state.selected = ""
+        setLoading(state, action) {
+            state.loading = action.payload
         }
     }
 })
 
-export const { getColorsPalette, setSelected, clearSelected } = dataSlice.actions
+export const { setSelected, clearSelected, setColors, setLoading } = dataSlice.actions
+
+export const getColors = (params) => async (dispatch) => {
+    try {
+        dispatch(setLoading(true))
+        const res = await dataApi.getPalette(params)
+        dispatch(setColors(res))
+    } catch(err) {
+        throw new Error(err)
+    } finally {
+        dispatch(setLoading(false))
+    }
+};
 
 export default dataSlice.reducer

@@ -1,28 +1,29 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getColorsPalette, setSelected, clearSelected } from '../features/dataSlice'
+import {  getColors } from '../features/dataSlice'
 
 function Board() {
     const dispatch = useDispatch()
     const colors = useSelector( state => state.data.colors)
     const loading = useSelector(state => state.data.loading)
   
-    const getColors = () => {
-      dispatch(getColorsPalette())
+    const getColorsPalette = () => {
+      const params = Math.floor(Math.random()*16777215).toString(16)
+      dispatch(getColors(params))
     }
   
     const getColor = (event) => {
-      dispatch(setSelected(event.target.innerHTML))
-      dispatch(getColorsPalette())
+      const params = event.target.innerHTML.slice(1)
+      dispatch(getColors(params))
     }
   
     const getRandomColor = () => {
-      dispatch(clearSelected());
-      dispatch(getColorsPalette())
+      const params = Math.floor(Math.random()*16777215).toString(16)
+      dispatch(getColors(params))
     }
-  
+
     useEffect(() => {
-      getColors()
+      getColorsPalette()
     }, [])
 
     return (
