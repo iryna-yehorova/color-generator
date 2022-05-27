@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {  getColors } from '../features/dataSlice'
+import { ActionCreators } from "redux-undo";
 
 function Board() {
     const dispatch = useDispatch()
-    const colors = useSelector( state => state.data.colors)
-    const loading = useSelector(state => state.data.loading)
+    const colors = useSelector( state => state.data.present.colors)
+    const loading = useSelector(state => state.data.present.ßloading)
   
     const getColorsPalette = () => {
       const params = Math.floor(Math.random()*16777215).toString(16)
@@ -58,6 +59,22 @@ function Board() {
             loading ? (<span className="animate-pulse">Loading...</span>) : (<>Change &rarr;</>)
           }
         </button>
+        <div class="flex gap-x-2.5">
+          <button
+            aria-label="Undo last change"
+            onClick={() => dispatch(ActionCreators.undo())}
+            className="mt-10 font-bold text-primary text-xl hover:text-active border rounded px-2"
+          >
+            &#x02039; Undo
+          </button>
+          <button
+            aria-label="Undo last change"
+            onClick={() => dispatch(ActionCreators.redo())}
+            className="mt-10 font-bold text-primary text-xl hover:text-active border rounded px-2"
+          >
+            Redo &#x0203A;
+          </button>
+        </div>
       </div>
     )
 
