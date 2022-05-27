@@ -2,11 +2,12 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {  getColors } from '../features/dataSlice'
 import { ActionCreators } from "redux-undo";
+import { paste } from '@testing-library/user-event/dist/paste';
 
 function Board() {
     const dispatch = useDispatch()
     const colors = useSelector( state => state.data.present.colors)
-    const loading = useSelector(state => state.data.present.ßloading)
+    const loading = useSelector(state => state.data.present.loading)
   
     const getColorsPalette = () => {
       const params = Math.floor(Math.random()*16777215).toString(16)
